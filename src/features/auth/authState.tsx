@@ -46,7 +46,7 @@ const authState = createSlice({
       if (token) {
         state.token = token;
         state.isAuthenticated = true;
-        state.user = 'user'; // bisa disesuaikan, misal simpan username di localStorage juga
+        state.user = 'user';
       } else {
         state.token = null;
         state.isAuthenticated = false;
