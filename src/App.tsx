@@ -8,20 +8,25 @@ import { getToken } from './features/auth/authState';
 import Sidebar from './components/Sidebar';
 
 const App: React.FC = () => {
-  const { token } = useAppSelector((state) => state.auth)
+  const { token, isAuthenticated } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
   useEffect(() => {
+    console.log('---- isAuthenticated')
+    console.log(isAuthenticated)
+    console.log('---- isAuthenticated')
     if (!token) {
       dispatch(getToken())
     } else {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
-  }, [token, dispatch]);
+  }, [token, dispatch, isAuthenticated]);
 
   return (
     <Router>
       <div style={{ display: 'flex' }}>
-        <Sidebar />
+        {isAuthenticated && (
+          <Sidebar />
+        )}
         <div style={{ flex: 1, padding: 20 }}>
           <Routes>
             <Route path="/" element={<Login />} />
