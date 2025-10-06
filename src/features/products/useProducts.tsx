@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useEffect } from 'react'
+import axiosClient from '../../app/axiosClient'
 
 export interface Product {
   id: number
@@ -13,7 +14,7 @@ export const useProducts = () => {
     queryKey: ['products'],
     queryFn: async () => {
       console.log('%c[FETCH API] calling fakestoreapi.com/products', 'color: orange')
-      const res = await axios.get('https://fakestoreapi.com/products')
+      const res = await axiosClient.get('https://fakestoreapi.com/products')
       return res.data
     },
     staleTime: 1000 * 60 * 5,

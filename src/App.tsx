@@ -3,14 +3,15 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from './app/queryClient'
 // import { useProducts } from './features/products/useProducts'
 import { ProductForm } from './components/ProductForm'
-import { getToken, loginUser, logout } from './features/auth/authSlice'
+import { getToken, loginUser, logout } from './features/auth/authState'
 import axios from 'axios'
 import { useEffect } from 'react'
+import { useProducts } from './features/products/useProducts'
 
 function App() {
   const { user, isAuthenticated, token } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
-  // const { data, isLoading } = useProducts()
+  const { data, isLoading } = useProducts()
 
   const handleLogin = () => {
     dispatch(loginUser({ username: 'mor_2314', password: '83r5^_' }))
