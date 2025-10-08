@@ -1,41 +1,34 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
-import Login from './pages/Home';
-import { useAppDispatch, useAppSelector } from './app/hook';
-import axios from 'axios';
-import { getToken } from './features/auth/authState';
-import Sidebar from './components/Sidebar';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import ListPage from './pages/ListPage';
+import ProtectedRoute from './components/Layout/ProtectedRoute';
 
-const App: React.FC = () => {
-  const { token, isAuthenticated } = useAppSelector((state) => state.auth)
-  const dispatch = useAppDispatch()
-  useEffect(() => {
-    console.log('---- isAuthenticated')
-    console.log(isAuthenticated)
-    console.log('---- isAuthenticated')
-    if (!token) {
-      dispatch(getToken())
-    } else {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    }
-  }, [token, dispatch, isAuthenticated]);
-
+function App() {
   return (
-    <Router>
-      <div style={{ display: 'flex' }}>
-        {isAuthenticated && (
-          <Sidebar />
-        )}
-        <div style={{ flex: 1, padding: 20 }}>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-        </div>
-      </div>
-    </Router>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route 
+          path="/home" 
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/list" 
+          element={
+            <ProtectedRoute>
+              <ListPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route path="*" element={<Navigate to="/home" />} />
+      </Routes>
+    </BrowserRouter>
   );
-};
+}
 
 export default App;
