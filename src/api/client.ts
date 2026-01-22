@@ -2,13 +2,14 @@ import axios from 'axios';
 import { store } from '../app/store';
 
 const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: import.meta.env.VITE_API_URL as string,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 apiClient.interceptors.request.use((config) => {
+  console.log('Request made with ', config);
   const token = store.getState().auth.token;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

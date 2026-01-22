@@ -9,8 +9,9 @@ interface LoginResponse {
 
 // Fungsi untuk login user
 export const login = async (credentials: LoginSchema): Promise<LoginResponse> => {
+  credentials.platform = "web";
   const response = await apiClient.post<LoginResponse>(
-    'general_auth.GeneralAuthHandler/Login', 
+    '/login', 
     credentials
   );
   return response.data;
