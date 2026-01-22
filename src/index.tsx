@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { MantineProvider } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { store } from './app/store';
 import App from './App';
-import '@mantine/core/styles.css';
+import '@/index.css'
 
 const queryClient = new QueryClient();
 
@@ -16,9 +15,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <MantineProvider>
           <App />
-        </MantineProvider>
       </QueryClientProvider>
     </Provider>
   </React.StrictMode>

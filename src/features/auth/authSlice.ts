@@ -13,7 +13,6 @@ export const loginUser = createAsyncThunk<
   'auth/login',
   async (credentials, { rejectWithValue }) => {
     try {
-      credentials.platform = 'web'
       const response = await login(credentials)
       return response
     } catch (error: any) {
