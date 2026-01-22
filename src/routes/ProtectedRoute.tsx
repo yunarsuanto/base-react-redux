@@ -1,34 +1,45 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
+type TokenPayload = {
+  token: string
+  expiry: number
+}
+
 export default function ProtectedRoute() {
   const location = useLocation()
-  
-  try {
-    const tokenData = localStorage.getItem('token')
-    if (!tokenData) {
-      return <Navigate to="/login" replace state={{ from: location }} />
-    }
-    
-    const { token, expiry } = JSON.parse(tokenData)
-    
-    // Cek apakah token sudah expired
-    if (Date.now() > expiry) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('refresh_token')
-      localStorage.removeItem('role')
-      return <Navigate to="/login" replace state={{ from: location }} />
-    }
-    
-    if (!token) {
-      return <Navigate to="/login" replace state={{ from: location }} />
-    }
-  } catch (error) {
-    // Jika parsing gagal, hapus token dan redirect ke login
-    localStorage.removeItem('token')
-    localStorage.removeItem('refresh_token')
-    localStorage.removeItem('role')
-    return <Navigate to="/login" replace state={{ from: location }} />
-  }
 
-  return <Outlet />
+  const redirect = (path: string) => (
+    <Navigate to={path} replace state={{ from: location }} />
+  )
+
+  try {
+    const tokenRaw = localStorage.getItem('token')
+    const role = localStorage.getItem('role')
+
+    if (!tokenRaw) return redirect('/login')
+
+    const { token, expiry }: TokenPayload = JSON.parse(tokenRaw)
+
+    if (!token || Date.now() > expiry) {
+      localStorage.clear()
+      return redirect('/login')
+    }
+
+    if (location.pathname === '/') {
+      return role === 'user'
+        ? redirect('/user')
+        : <Outlet />
+    }
+
+    if (location.pathname === '/user') {
+      return role !== 'user'
+        ? redirect('/')
+        : <Outlet />
+    }
+
+    return <Outlet />
+  } catch {
+    localStorage.clear()
+    return redirect('/login')
+  }
 }

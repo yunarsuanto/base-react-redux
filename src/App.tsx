@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ProtectedRoute from '@/routes/ProtectedRoute'
 import LoginPage from '@/pages/LoginPage'
-import HomePage from './pages/HomePage'
+import AdminPage from './pages/AdminPage'
+import UserPage from './pages/UserPage'
+import PWAInstallPrompt from './components/PWAInstallPrompt'
 
 export default function App() {
   return (
@@ -10,10 +12,11 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
 
         <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/user" element={<HomePage />} />
+          <Route path="/" element={<AdminPage />} />
+          <Route path="/user" element={<UserPage />} />
         </Route>
       </Routes>
+      <PWAInstallPrompt />
     </BrowserRouter>
   )
 }

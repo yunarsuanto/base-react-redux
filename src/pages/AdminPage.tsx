@@ -2,7 +2,7 @@ import { useAppDispatch } from '../app/hooks';
 import { clearToken } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 
-const HomePage = () => {
+const AdminPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -18,4 +18,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default AdminPage;

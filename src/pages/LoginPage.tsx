@@ -49,10 +49,9 @@ const LoginPage = () => {
   }
 
   return (
-  <div className="min-h-screen bg-red-400 flex items-center justify-center px-4">
-    <div className="w-full max-w-sm bg-white rounded-lg shadow-md border">
-      {/* Header */}
-      <div className="px-6 py-4 border-b text-center">
+  <div className="min-h-screen bg-teal-600 flex items-center justify-center px-4">
+    <div className="w-full max-w-sm bg-white rounded-lg shadow-md border border-gray-300">
+      <div className="px-6 py-4 border-b border-gray-300 text-center">
         <h1 className="text-xl font-semibold text-gray-800">
           Login
         </h1>
@@ -61,12 +60,10 @@ const LoginPage = () => {
         </p>
       </div>
 
-      {/* Body */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="px-6 py-6 space-y-4"
       >
-        {/* Username */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Username
@@ -79,9 +76,7 @@ const LoginPage = () => {
                 {...field}
                 type="text"
                 placeholder="Masukkan username"
-                className="w-full px-3 py-2 border rounded-md text-sm
-                           focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-                           outline-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
               />
             )}
           />
@@ -92,7 +87,6 @@ const LoginPage = () => {
           )}
         </div>
 
-        {/* Password */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Password
@@ -105,9 +99,7 @@ const LoginPage = () => {
                 {...field}
                 type="password"
                 placeholder="Masukkan password"
-                className="w-full px-3 py-2 border rounded-md text-sm
-                           focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-                           outline-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
               />
             )}
           />
@@ -118,28 +110,23 @@ const LoginPage = () => {
           )}
         </div>
 
-        {/* API Error */}
         {error && (
           <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md px-3 py-2">
             {error}
           </div>
         )}
 
-        {/* Button */}
         <button
           type="submit"
           disabled={!isValid || loading === 'pending'}
-          className="w-full py-2 text-sm font-semibold text-white bg-blue-600
-                     rounded-md hover:bg-blue-700 transition
-                     disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full py-2 text-sm font-semibold text-white bg-teal-600 rounded-md hover:bg-teal-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading === 'pending' ? 'Loading...' : 'Login'}
         </button>
       </form>
 
-      {/* Footer */}
-      <div className="px-6 py-4 border-t text-center text-xs text-gray-500">
-        © 2026 Aplikasi Anda
+      <div className="px-6 py-4 border-t border-gray-300 text-center text-xs text-gray-500">
+        © 2026 Aplikasi Koperasi
       </div>
     </div>
   </div>
