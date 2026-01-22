@@ -1,17 +1,19 @@
 import apiClient from "./client";
 import { LoginSchema } from "../schemas/login.schema";
+import { AuthResponse } from "@/types/general/AuthType";
+import { LoginWithGoogleSchema } from "@/schemas/login_with_google.schema";
 
-// Asumsi respons API memiliki struktur ini
-interface LoginResponse {
-  token: string;
-  // tambahkan properti lain jika ada, misal: user: User
-}
-
-// Fungsi untuk login user
-export const login = async (credentials: LoginSchema): Promise<LoginResponse> => {
-  credentials.platform = "web";
-  const response = await apiClient.post<LoginResponse>(
+export const login = async (credentials: LoginSchema): Promise<AuthResponse> => {
+  const response = await apiClient.post<AuthResponse>(
     '/login', 
+    credentials
+  );
+  return response.data;
+};
+
+export const loginWithGoogle = async (credentials: LoginWithGoogleSchema): Promise<AuthResponse> => {
+  const response = await apiClient.post<AuthResponse>(
+    '/login/google', 
     credentials
   );
   return response.data;

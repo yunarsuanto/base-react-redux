@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 const LoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { loading, error, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { loading, error } = useAppSelector((state) => state.auth);
 
   const { 
     control, 
@@ -21,15 +21,24 @@ const LoginPage = () => {
     defaultValues: { username: '', password: '' },
   });
 
-  const onSubmit = (data: LoginSchema) => {
-    dispatch(loginUser(data));
-  };
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/home');
+  const onSubmit = async (data: LoginSchema) => {
+    const resultAction = await dispatch(loginUser(data)).unwrap();
+    console.log(resultAction.data.role)
+    switch (resultAction.data.role) {
+      case 'admin':
+        navigate('/admin');
+        break;
+      case 'superadmin':
+        navigate('/admin');
+        break;
+      case 'user':
+        navigate('/user');
+        break;
+      default:
+        navigate('/')
+        break;
     }
-  }, [isAuthenticated, navigate]);
+  };
 
   return (
     <Container size="xs" style={{ marginTop: 100 }}>
